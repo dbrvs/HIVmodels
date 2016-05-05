@@ -1,5 +1,8 @@
 #!/usr/bin/python
-# 2 simple models of HIV dynamics (inspired by Perelson et al 1996)
+# 2 simple models of HIV dynamics (inspired by Perelson et al 1996). These models use ordinary differential equations to track the populations of susceptible (S), actively infected and virus producing (A), and virus themselves (V)
+# The parameters are taken from the literature, and are checked at the end using the basic reproductive number (the average number of infected cells that arise from a single infected cell in a totally susceptible population) which should be around 8-11 for HIV
+# There is a regular susceptible cell growth model, as well as a logistic growth model
+# We also check the adiabatic approximation of using the actively infected cells to model virus. The viral timescales are so much faster that it suffices to multiply the infected cells by a constant (the burst size). See the plot for visual confirmation.
 # by DBR 7/2015 #
 
 import scipy.integrate as spi
