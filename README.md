@@ -1,2 +1,2 @@
 # HIVmodels
-This will now be my server for various HIV models as I go
+This will now be my repository for various HIV models as I keep moving onward.
