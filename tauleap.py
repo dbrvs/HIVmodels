@@ -31,7 +31,7 @@ def update_rates(X,t):
 
 
 #function that solves stochastically using tau-leap method
-def bnabs_tauleap(t,X0):
+def simulate_tauleap(t,X0):
 
     dt=t[1]; x=X0; y=[] #initialize
     for ti in t:
@@ -69,30 +69,28 @@ tau = 1e-4        # probability of latency given infction
 dL=aL-thL-xi #death rate
 l=1-(1+xi/thL)*tau #latency factor
 
+#equilibrium solutions
 Seq=gam*dA/Bt0/pi/l
 Leq=tau/thL*(gam*dS*dA/Bt0/pi/l-aS)
 Aeq=aS*l/dA-gam*dS/Bt0/pi
 Veq=aS*pi*l/gam/dA-dS/Bt0
-
 Xeq=np.array([Seq,Leq,Aeq,Veq])
 
+#basic reproductive number
 R0=aS*Bt0*pi/gam/dS/dA
-
 print('R_0',R0)
 print('ep_c',1-1/R0)
 
-num_sims=7; 
-t=np.linspace(0,3*7,1e4)
+t=np.linspace(0,3*7,1e4) #time in days
 
 #solve the model
-plt.figure(figsize=(6,4),dpi=600)
-tlp_sol = bnabs_tauleap(t,X0=np.array([aS/dS,0,0,0]))
+tlp_sol = simulate_tauleap(t,X0=np.array([aS/dS,0,0,0]))
 
+#plot the solution
+plt.figure(figsize=(6,4),dpi=600)
 plt.semilogy(t/7,tlp_sol/5e3)
 plt.ylabel('Viral load (copies/mL)')
-
 plt.semilogy(t/7,np.ones(len(t))*Veq/5e3,ls='--',lw=2,color='k')
-
 plt.xlabel('time (weeks)')
 plt.tight_layout()
 
